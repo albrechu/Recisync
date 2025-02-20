@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<tk:Popup xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+          xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+          xmlns:tk="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+          xmlns:p="clr-namespace:Recisync.App.Pages"
+          xmlns:l10n="clr-namespace:Resisync.Core.UI.Locale;assembly=Resisync.Core.UI"
+          xmlns:cc="clr-namespace:Resisync.Core.UI.Controls;assembly=Resisync.Core.UI"
+          x:Class="Recisync.App.Pages.SelectionPopup"
+          x:DataType="p:SelectionPopup"
+          Color="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource OffBlack}}"
+          CanBeDismissedByTappingOutsideOfPopup="False"
+          Size="400,500"
+          x:Name="root"
+          HorizontalOptions="Center"
+          VerticalOptions="Center"
+          >
+    <Border >
+        <Grid RowDefinitions="Auto,Auto,Auto,*">
+            <Grid Grid.Row="0" ColumnDefinitions="Auto,Auto,*">
+                <Label Grid.Column="0" Text="{Binding Source={Reference root}, Path=IconText}" 
+                       FontFamily="{StaticResource FontIcons}" FontSize="{StaticResource FontTitle}" 
+                       VerticalOptions="Center"
+                       Margin="5"
+                       />
+                <Label Grid.Column="1" Text="{Binding Source={Reference root}, Path=Title}" 
+                       Margin="5,0,0,0"
+                       VerticalOptions="Center" FontSize="{StaticResource FontSubtitle}"/>
+                <cc:IconButton Grid.Column="2" IconText="{Static l10n:Icons.Close}" 
+                    HorizontalOptions="End"
+                    Pressed="OnClose"
+                    />
+            </Grid>
+            <BoxView Grid.Row="1" HeightRequest="1"/>
+            <ContentView Grid.Row="2" Content="{Binding CustomContent, Source={Reference root}}"/>
+            <CollectionView ItemsSource="{Binding Source={Reference root}, Path=Items}" 
+                            SelectionMode="None"
+                            Grid.Row="3"
+                            HorizontalOptions="Fill"
+                            VerticalOptions="Fill"
+                            Margin="20"
+                            >
+                <CollectionView.ItemsLayout>
+                    <GridItemsLayout Orientation="Vertical" Span="2"/>
+                </CollectionView.ItemsLayout>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="p:SelectableItem">
+                        <Grid ColumnDefinitions="*,*">
+                            <Label Grid.Column="0" HorizontalOptions="Start" VerticalOptions="Center" Text="{Binding Name}" FontAttributes="Bold"/>
+                            <CheckBox Grid.Column="1" 
+                                      HorizontalOptions="Start" 
+                                      VerticalOptions="Center" 
+                                      IsChecked="{Binding Enabled}" 
+                                      />
+                        </Grid>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </Grid>
+    </Border>
+</tk:Popup>

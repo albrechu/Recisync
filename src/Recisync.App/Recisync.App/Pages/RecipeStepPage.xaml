@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:Recisync.App.Pages"
+             x:Class="Recisync.App.Pages.RecipeStepPage"
+             xmlns:cc="clr-namespace:Resisync.Core.UI.Controls;assembly=Resisync.Core.UI"
+             xmlns:l10n="clr-namespace:Resisync.Core.UI.Locale;assembly=Resisync.Core.UI"
+             xmlns:mct="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             x:DataType="local:RecipeStepPage"
+             Title=""
+             >
+    <Grid RowDefinitions="*,Auto">
+        <!--Displayed step-->
+        <ScrollView>
+            <VerticalStackLayout Grid.Row="0">
+                <Grid BackgroundColor="{AppThemeBinding Dark={StaticResource PitchBlack}, Light={StaticResource Secondary}}">
+                    <Image Source="{Binding Path=Step.Image, Converter={mct:ByteArrayToImageSourceConverter}}"
+                        HorizontalOptions="Fill"
+                        HeightRequest="250"
+                        Aspect="AspectFill"
+                        />
+                    <Border HorizontalOptions="Center" VerticalOptions="End"
+                            BackgroundColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource OffBlack}}"
+                            Padding="10" StrokeShape="{RoundRectangle CornerRadius=17}"
+                            Margin="0,0,0,5"
+                            >
+                        <Grid ColumnDefinitions="Auto,*">
+                            <Label Grid.Column="0" Text="{Binding Path=Step.Step, StringFormat='{0}.'}" FontSize="{StaticResource FontSubtitle}" Margin="0,0,10,0"/>
+                            <Label Grid.Column="1" Text="{Binding Step.Name}" HorizontalOptions="Center" FontSize="{StaticResource FontSubtitle}"/>
+                        </Grid>
+                    </Border>
+                </Grid>
+                <BoxView HeightRequest="1"/>
+                <Label Text="{Binding Step.Description}" FontSize="{StaticResource FontSubtitle}" Padding="30,20,30,0"/>
+            </VerticalStackLayout>
+        </ScrollView>
+        
+        <!--Next actions-->
+        <Grid Grid.Row="1" ColumnDefinitions="*,*">
+            <cc:IconButton Grid.Column="0" 
+                           IconText="{Static l10n:Icons.ArrowBackIOSNew}" Text="{Static l10n:Strings.Previous}"
+                           Command="{Binding PreviousCommand}"
+                           />
+            <cc:IconButton Grid.Column="1" 
+                           IconText="{Static l10n:Icons.ArrowForwardIOS}" Text="{Static l10n:Strings.Next}"
+                           Command="{Binding NextCommand}"
+                           />
+        </Grid> 
+    </Grid>
+</ContentPage>

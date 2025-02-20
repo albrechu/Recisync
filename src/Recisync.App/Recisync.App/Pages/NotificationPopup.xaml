@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<tk:Popup xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+          xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+          x:Class="Recisync.App.Pages.NotificationPopup"
+          xmlns:tk="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+          xmlns:p="clr-namespace:Recisync.App.Pages"
+          xmlns:l10n="clr-namespace:Resisync.Core.UI.Locale;assembly=Resisync.Core.UI"
+          xmlns:cc="clr-namespace:Resisync.Core.UI.Controls;assembly=Resisync.Core.UI"
+          Color="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource OffBlack}}"
+          CanBeDismissedByTappingOutsideOfPopup="False"
+          Size="500,300"
+          x:Name="root"
+          >
+    <Border>
+        <Grid RowDefinitions="Auto,Auto,*,Auto">
+            <HorizontalStackLayout Grid.Row="0">
+                <Label Text="{Static x:String.Empty}" FontFamily="{StaticResource FontIcons}" FontSize="{StaticResource FontTitle}" VerticalOptions="Center">
+                    <Label.Triggers>
+                        <DataTrigger TargetType="Label" Binding="{Binding Source={Reference root}, Path=NotificationType}" Value="{Static p:NotificationType.Warning}">
+                            <Setter Property="Text" Value="{Static l10n:Icons.Warning}"/>
+                        </DataTrigger>
+                        <DataTrigger TargetType="Label" Binding="{Binding Source={Reference root}, Path=NotificationType}" Value="{Static p:NotificationType.Error}">
+                            <Setter Property="Text" Value="{Static l10n:Icons.Report}"/>
+                        </DataTrigger>
+                    </Label.Triggers>
+                </Label>
+                <Label Text="{Binding Source={Reference root}, Path=Title}" Margin="15,0,0,0" VerticalOptions="Center" FontSize="{StaticResource FontSubtitle}"/>
+            </HorizontalStackLayout>
+            <BoxView Grid.Row="1" HeightRequest="1"/>
+            <Label Grid.Row="2"  Text="{Binding Source={Reference root}, Path=Description}" Padding="15"/>
+            <cc:IconButton Grid.Row="3" IconText="{Static l10n:Icons.CheckCircle}" Text="{Static l10n:Strings.OK}" IsVisible="False"
+                           Command="{Binding PressedCommand, Source={Reference root}}" CommandParameter="{Static p:PromptResult.OK}"
+                           >
+                <cc:IconButton.Triggers>
+                    <DataTrigger TargetType="cc:IconButton" Binding="{Binding PromptType, Source={Reference root}}" Value="{Static p:PromptType.OK}">
+                        <DataTrigger.Setters>
+                            <Setter Property="IsVisible" Value="True"/>
+                        </DataTrigger.Setters>
+                    </DataTrigger>
+                </cc:IconButton.Triggers>
+            </cc:IconButton>
+            <Grid Grid.Row="3" ColumnDefinitions="*,*" IsVisible="False">
+                <Grid.Triggers>
+                    <DataTrigger TargetType="Grid" Binding="{Binding PromptType, Source={Reference root}}" Value="{Static p:PromptType.YesNo}">
+                        <DataTrigger.Setters>
+                            <Setter Property="IsVisible" Value="True"/>
+                        </DataTrigger.Setters>
+                    </DataTrigger>
+                </Grid.Triggers>
+
+                <cc:IconButton Grid.Column="0" IconText="{Static l10n:Icons.CheckCircle}" Text="{Static l10n:Strings.Yes}"
+                    Command="{Binding PressedCommand, Source={Reference root}}" CommandParameter="{Static p:PromptResult.Yes}"
+                    />
+                <cc:IconButton Grid.Column="1" IconText="{Static l10n:Icons.Cancel}" Text="{Static l10n:Strings.No}"
+                    Command="{Binding PressedCommand, Source={Reference root}}" CommandParameter="{Static p:PromptResult.No}"
+                    />
+            </Grid>
+        </Grid>
+    </Border>
+</tk:Popup>

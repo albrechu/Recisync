@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Resisync.Core.UI.Controls.IconButton"
+             xmlns:local="clr-namespace:Resisync.Core.UI.Controls"
+             xmlns:cvt="clr-namespace:Resisync.Core.UI.Converters"
+             x:DataType="local:IconButton"
+             x:Name="root"
+             StrokeShape="{RoundRectangle CornerRadius=8}"
+             Background="{Binding Source={Reference root}, Path=Background}"
+             >
+    <ContentView.GestureRecognizers>
+        <TapGestureRecognizer Tapped="OnTapped"  
+                              Command="{Binding Source={Reference root}, Path=Command}" 
+                              CommandParameter="{Binding Source={Reference root}, Path=CommandParameter}"
+                              />
+        <!--@Note: Here seems to be a problem with control focus. It requires two clicks (Windows).-->
+    </ContentView.GestureRecognizers>
+
+    <Grid ColumnDefinitions="Auto,Auto" HorizontalOptions="Center">
+        <Label Grid.Column="0"
+            Text="{Binding Source={Reference root}, Path=IconText}" 
+            FontFamily="{Binding Source={Reference root}, Path=IconFontFamily}" 
+            FontSize="{Binding Source={Reference root}, Path=IconSize}" 
+            TextColor="{Binding Source={Reference root}, Path=IconColor}" 
+            VerticalOptions="Center"
+            HorizontalOptions="Center"
+            />
+        <Label Grid.Column="1" Margin="5,0,0,0"
+            Text="{Binding Source={Reference root}, Path=Text}" 
+            FontFamily="{Binding Source={Reference root}, Path=FontFamily}" 
+            FontSize="{Binding Source={Reference root}, Path=FontSize}" 
+            TextColor="{Binding Source={Reference root}, Path=TextColor}" 
+            VerticalTextAlignment="Center"
+            HorizontalTextAlignment="Center"
+            LineBreakMode="WordWrap"
+            />
+    </Grid>
+</ContentView>

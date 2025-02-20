@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:mct="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             x:Class="Recisync.App.Pages.RecipeDetailPage"
+             xmlns:data="clr-namespace:Resisync.Core.Data;assembly=Resisync.Core"
+             x:DataType="data:Recipe"
+             xmlns:cc="clr-namespace:Resisync.Core.UI.Controls;assembly=Resisync.Core.UI"
+             xmlns:l10n="clr-namespace:Resisync.Core.UI.Locale;assembly=Resisync.Core.UI"
+             xmlns:beh="clr-namespace:Resisync.Core.UI.Behaviors;assembly=Resisync.Core.UI"
+             xmlns:p="clr-namespace:Recisync.App.Pages"
+             xmlns:cvt="clr-namespace:Resisync.Core.UI.Converters;assembly=Resisync.Core.UI"
+             xmlns:acvt="clr-namespace:Recisync.App.Converters"
+             Title=""
+             x:Name="root"
+             >
+    <Grid RowDefinitions="*,Auto">
+        <ScrollView Grid.Row="0" Padding="0">
+            <VerticalStackLayout>
+                <Grid BackgroundColor="{AppThemeBinding Dark={StaticResource PitchBlack}, Light={StaticResource Secondary}}">
+                    <!--Cover Image-->
+                    <Image Source="{Binding Path=CoverImage, Converter={mct:ByteArrayToImageSourceConverter}}"
+                        HorizontalOptions="Fill"
+                        Aspect="AspectFill"
+                        HeightRequest="250"
+                        />
+                    <!--Title-->
+                    <Border HorizontalOptions="Center"  VerticalOptions="End" 
+                            BackgroundColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource OffBlack}}"
+                            Padding="10" StrokeShape="{RoundRectangle CornerRadius=17}"
+                            Margin="0,0,0,5"
+                            >
+                        <Label Text="{Binding Path=Name}" FontSize="{StaticResource FontSubtitle}" FontAttributes="Bold"/>
+                    </Border>
+                </Grid>
+                <BoxView HeightRequest="1"/>
+                <VerticalStackLayout Padding="15">
+                    <!--Date-->
+                    <Label Text="{Binding Date, Converter={acvt:DateTimeStringConverter}}" FontSize="{StaticResource FontMicro}" HorizontalOptions="End"/>
+                    <!--Short Description-->
+                    <Label Text="{Binding ShortDescription}" Margin="15,15,0,0" FontSize="{StaticResource FontSubtitle}"/>
+                    <!--Category, Persons, Time Spent-->
+                    <mct:UniformItemsLayout Margin="0,15,0,0" >
+                        <cc:IconButton IsEnabled="False"
+                                       IconText="{Static l10n:Icons.Icecream}"
+                                       Text="{Binding FoodCategory, Converter={acvt:FoodCategoryToStringConverter}}"
+                                       Margin="15,0,0,0" 
+                                       />
+                        <cc:IconButton IsEnabled="False" 
+                                       IconText="{Static l10n:Icons.Person}"
+                                       Text="{Binding People}" 
+                                       Margin="15,0,0,0" 
+                                       />
+                        <cc:IconButton IsEnabled="False" 
+                                       IconText="{Static l10n:Icons.Schedule}"
+                                       Text="{Binding Duration, Converter={acvt:TimeSpanToHHmmConverter}}" 
+                                       Margin="15,0,0,0" 
+                                       />
+                    </mct:UniformItemsLayout>
+                    <!--Keywords-->
+                    <Grid ColumnDefinitions="Auto,*" Margin="15,15,0,0">
+                        <Label Grid.Column="0" Margin="0,20,20,0" Text="{Static l10n:Strings.Keywords}" FontSize="{StaticResource FontSubtitle}"/>
+                        <cc:TagsControl Keywords="{Binding Keywords}" Grid.Column="1"
+                                        VerticalOptions="FillAndExpand"
+                                        HorizontalOptions="FillAndExpand"
+                                        />
+                    </Grid>
+                </VerticalStackLayout>
+
+                <!--Ingredients-->
+                <Label Margin="15,5" Text="{Static l10n:Strings.Ingredients}" FontSize="{StaticResource FontSubtitle}" FontAttributes="Bold"/>
+                <Border StrokeThickness="0.4" Margin="10,0">
+                    <CollectionView ItemsSource="{Binding Ingredients}" 
+                                    SelectionMode="None"
+                                    HorizontalOptions="Fill"
+                                    >
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate x:DataType="data:Ingredient">
+                                <Border StrokeThickness="0.5" Padding="10">
+                                    <Grid ColumnDefinitions="*,2*,2*">
+                                        <Label Grid.Column="0" Text="{Binding Amount}" Margin="0,0,10,0" FontAttributes="Bold"/>
+                                        <Label Grid.Column="1" Text="{Binding Name}" FontAttributes="Bold"/>
+                                        <Label Grid.Column="2" Text="{Binding Note, StringFormat='({0})'}" IsVisible="{Binding Note, Converter={mct:IsStringNotNullOrEmptyConverter}}"/>
+                                    </Grid>
+                                </Border>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+                </Border>
+
+                <!--Short Description-->
+                <Label Margin="15,20,15,5" 
+                       Text="{Static l10n:Strings.Description}" 
+                       FontSize="{StaticResource FontSubtitle}" 
+                       FontAttributes="Bold"
+                       IsVisible="{Binding Description, Converter={mct:IsStringNotNullOrEmptyConverter}}"
+                       />
+                <Label Text="{Binding Description}" Margin="15,15,0,0" FontSize="{StaticResource FontSubtitle}" />
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <!--Begin Steps-->
+        <cc:IconButton Grid.Row="1" IconText="{Static l10n:Icons.Blender}" Text="{Static l10n:Strings.Cook}">
+            <cc:IconButton.Behaviors>
+                <beh:NavigationBehavior 
+                    EventName="Pressed"
+                    PageType="{Type p:RecipeStepPage}"
+                    CustomPageTypeParameter="{Binding Steps}"
+                    />
+            </cc:IconButton.Behaviors>
+            <cc:IconButton.Triggers>
+                <DataTrigger TargetType="cc:IconButton" Binding="{Binding Steps.Count}" Value="0">
+                    <Setter Property="IsEnabled" Value="False"/>
+                </DataTrigger>
+            </cc:IconButton.Triggers>
+        </cc:IconButton>
+    </Grid>
+</ContentPage>

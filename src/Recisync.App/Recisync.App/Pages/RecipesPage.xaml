@@ -1,0 +1,220 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:data="clr-namespace:Resisync.Core.Data;assembly=Resisync.Core"
+             xmlns:vm="clr-namespace:Recisync.App.ViewModels"
+             x:Class="Recisync.App.Pages.RecipesPage"
+             x:DataType="vm:RecipesViewModel"
+             xmlns:mct="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:l10n="clr-namespace:Resisync.Core.UI.Locale;assembly=Resisync.Core.UI"
+             xmlns:beh="clr-namespace:Resisync.Core.UI.Behaviors;assembly=Resisync.Core.UI"
+             xmlns:p="clr-namespace:Recisync.App.Pages"
+             xmlns:acvt="clr-namespace:Recisync.App.Converters"
+             xmlns:cc="clr-namespace:Resisync.Core.UI.Controls;assembly=Resisync.Core.UI"
+             Title=""
+             x:Name="root"
+             >
+    <Grid RowDefinitions="Auto,Auto,Auto,*" Margin="0,15,0,0" Padding="20,0,20,20">
+        <!--Search, Filtering and Sorting-->
+        <Grid Grid.Row="0" ColumnDefinitions="*,Auto,Auto">
+            <SearchBar Grid.Column="0"
+                       Placeholder="{Static l10n:Strings.SearchRecipes}" 
+                       Text="{Binding Query}"
+                       >
+                <SearchBar.Behaviors>
+                    <mct:UserStoppedTypingBehavior
+                       Command="{Binding RefreshSearchCommand}" 
+                       StoppedTypingTimeThreshold="1000"
+                       MinimumLengthThreshold="3"
+                       ShouldDismissKeyboardAutomatically="False"
+                       />
+                </SearchBar.Behaviors>
+            </SearchBar>
+            <cc:IconButton Grid.Column="1" Margin="5,0" IconText="{Static l10n:Icons.FilterAlt}">
+                <cc:IconButton.Behaviors>
+                    <beh:PopupBehavior EventName="Pressed" PopupInstanceFetcher="{Binding FilterPopupFetcher, Source={Reference root}}">
+                        <!--<beh:PopupBehavior.PopupInstance>
+                            <p:SelectionPopup 
+                                SelectedItems="{Binding SelectedCategories}"
+                                ItemsSource="{Binding Categories}" 
+                                Converter="{acvt:FoodCategoryToStringConverter}"
+                                SelectionChangedCommand="{Binding FilterCommand}"
+                                Title="{Static l10n:Strings.Filter}"
+                                IconText="{Static l10n:Icons.FilterAlt}"
+                                />
+                        </beh:PopupBehavior.PopupInstance>-->
+                    </beh:PopupBehavior>
+                </cc:IconButton.Behaviors>
+            </cc:IconButton>
+            <cc:IconButton Grid.Column="2" Margin="5,0" IconText="{Static l10n:Icons.Sort}">
+                <cc:IconButton.Behaviors>
+                    <beh:PopupBehavior EventName="Pressed" PopupInstanceFetcher="{Binding SortPopupFetcher, Source={Reference root}}">
+                        <!--<beh:PopupBehavior.PopupInstance>
+                            <p:SelectionPopup SelectedItems="{Binding SelectedSortBy}"
+                                ItemsSource="{Binding Sorts}"
+                                Converter="{acvt:SortRecipeByToStringConverter}"
+                                SelectionChangedCommand="{Binding FilterCommand}"
+                                Title="{Static l10n:Strings.SortBy}"
+                                IconText="{Static l10n:Icons.Sort}"
+                                SelectionMode="Single"
+                                >
+                                <p:SelectionPopup.CustomContent>
+                                    <cc:IconButton IconText="{Static l10n:Icons.North}" IconColor="#5DB863"
+                                                   Text="{Static l10n:Strings.Ascending}" 
+                                                   Command="{Binding SwapOrderPolarityCommand}"
+                                                   Margin="20"
+                                                   >
+                                        <cc:IconButton.Triggers>
+                                            <DataTrigger TargetType="cc:IconButton" Binding="{Binding Descending}" Value="True">
+                                                <Setter Property="IconText" Value="{Static l10n:Icons.South}"/>
+                                                <Setter Property="Text" Value="{Static l10n:Strings.Descending}"/>
+                                                <Setter Property="IconColor" Value="#D0312D"/>
+                                            </DataTrigger>
+                                        </cc:IconButton.Triggers>
+                                    </cc:IconButton>
+                                </p:SelectionPopup.CustomContent>
+                            </p:SelectionPopup>
+                        </beh:PopupBehavior.PopupInstance>-->
+                    </beh:PopupBehavior>
+                </cc:IconButton.Behaviors>
+            </cc:IconButton>
+        </Grid>
+        <!--Settings-->
+        <HorizontalStackLayout Grid.Row="1" Margin="0,10,0,0">
+            <!--Connection-->
+            <cc:IconButton 
+                IconText="{Static l10n:Icons.Cloud}" 
+                Text="{Static l10n:Strings.Connect}"
+                Margin="0,0,10,0"
+                >
+                <cc:IconButton.Behaviors>
+                    <beh:PopupBehavior
+                        EventName="Pressed"
+                        PopupType="{Type p:CloudPopup}"
+                        />
+                </cc:IconButton.Behaviors>
+                <cc:IconButton.Triggers>
+                    <DataTrigger TargetType="cc:IconButton" Binding="{Binding IsConnected}" Value="True">
+                        <Setter Property="IconText" Value="{Static l10n:Icons.CloudDone}"/>
+                    </DataTrigger>
+                </cc:IconButton.Triggers>
+            </cc:IconButton>
+            <!--Theme-->
+            <cc:IconButton IconText="{AppThemeBinding Light={Static l10n:Icons.LightMode}, Dark={Static l10n:Icons.DarkMode}}"
+                Text="{AppThemeBinding Light='Light', Dark='Dark'}"           
+                Command="{Binding SwapThemeCommand}"
+                />
+        </HorizontalStackLayout>
+        <!--Actions-->
+        <Grid Grid.Row="2" ColumnDefinitions="Auto,*" Margin="0,10,0,0">
+            <!--Synchronize-->
+            <cc:IconButton Grid.Column="0" IconText="{Static l10n:Icons.Sync}" Text="{Static l10n:Strings.Refresh}"
+                Command="{Binding SyncCommand}"
+                />
+
+            <!--Add New Recipe-->
+            <cc:IconButton Grid.Column="1" 
+                           VerticalOptions="Center" 
+                           HorizontalOptions="End" 
+                           IconText="{Static l10n:Icons.Add}" 
+                           Text="{Static l10n:Strings.AddRecipe}"
+                           >
+                <cc:IconButton.Behaviors>
+                    <beh:NavigationBehavior
+                        EventName="Pressed"
+                        PageType="{Type p:EditRecipePage}"
+                        />
+                </cc:IconButton.Behaviors>
+            </cc:IconButton>
+        </Grid>
+
+        <!--Recipe List-->
+        <CollectionView ItemsSource="{Binding Results}" 
+                        Grid.Row="3" Margin="0,10,0,0"
+                        x:Name="RecipeList"
+                        >
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="data:Recipe">
+                    <Border Margin="5,0" StrokeThickness="2">
+                        <Grid ColumnDefinitions="Auto,*,Auto" HeightRequest="150"
+                              BackgroundColor="{AppThemeBinding Dark={StaticResource PitchBlack}, Light={StaticResource Secondary}}">
+                            <mct:AvatarView Grid.Column="0" 
+                               ImageSource="{Binding Path=CoverImage, Converter={mct:ByteArrayToImageSourceConverter}}" 
+                               HeightRequest="100" WidthRequest="120"
+                               Margin="0,0,10,0" VerticalOptions="Start"
+                               CornerRadius="0" BorderWidth="2"
+                               />
+                            <VerticalStackLayout Grid.Column="1">
+                                <Label Text="{Binding Name}" FontSize="{StaticResource FontSubtitle}" FontAttributes="Bold"/>
+                                <FlexLayout Wrap="Wrap">
+                                    <HorizontalStackLayout>
+                                        <Label Text="{Static l10n:Icons.Icecream}" FontFamily="{StaticResource FontIcons}" VerticalOptions="Center"/>
+                                        <Label Text="{Binding FoodCategory, Converter={acvt:FoodCategoryToStringConverter}}" Margin="0,0,10,0"/>
+                                    </HorizontalStackLayout>
+                                    <HorizontalStackLayout>
+                                        <Label Text="{Static l10n:Icons.Person}" FontFamily="{StaticResource FontIcons}" VerticalOptions="Center"/>
+                                        <Label Text="{Binding People}" Margin="0,0,10,0"/>
+                                    </HorizontalStackLayout>
+                                    <HorizontalStackLayout>
+                                        <Label Text="{Static l10n:Icons.Schedule}" FontFamily="{StaticResource FontIcons}" VerticalOptions="Center"/>
+                                        <Label Text="{Binding Duration, Converter={acvt:TimeSpanToHHmmConverter}}"/>
+                                    </HorizontalStackLayout>
+                                </FlexLayout>
+                                <cc:TagsControl Keywords="{Binding Keywords}" 
+                                                Command="{Binding TagCommand, Source={RelativeSource Mode=FindAncestorBindingContext, AncestorType={Type CollectionView}}}"
+                                                />
+                            </VerticalStackLayout>
+                            <Grid RowDefinitions="*,*,*" Grid.Column="2" WidthRequest="40">
+                                <cc:IconButton Grid.Row="0" IconText="{Static l10n:Icons.ArrowForward}" >
+                                    <cc:IconButton.Behaviors>
+                                        <beh:NavigationBehavior 
+                                            EventName="Pressed"
+                                            PageType="{Type p:RecipeDetailPage}"
+                                            CustomPageTypeParameter="{Binding .}"
+                                            />
+                                    </cc:IconButton.Behaviors>
+                                </cc:IconButton>
+
+                                <cc:IconButton Grid.Row="1" IconText="{Static l10n:Icons.Edit}" 
+                                               Style="{StaticResource SpecialIconButton}"
+                                               >
+                                    <cc:IconButton.Behaviors>
+                                        <beh:NavigationBehavior 
+                                            EventName="Pressed"
+                                            PageType="{Type p:EditRecipePage}"
+                                            CustomPageTypeParameter="{Binding .}"
+                                            />
+                                    </cc:IconButton.Behaviors>
+                                </cc:IconButton>
+                                <cc:IconButton Grid.Row="2" 
+                                               IconText="{Static l10n:Icons.Delete}"
+                                               Style="{StaticResource DangerIconButton}"
+                                               x:Name="delete"
+                                               >
+                                    <cc:IconButton.Behaviors>
+                                        <beh:PopupBehavior EventName="Pressed" 
+                                                           PopupInstanceFetcher="{Binding DeletePopupFetcher, Source={Reference root}}"
+                                                           Parameter="{Binding .}"
+                                                           >
+                                            <!--<beh:PopupBehavior.PopupInstance>
+                                                <p:NotificationPopup
+                                                    BindingContext="{RelativeSource Mode=FindAncestorBindingContext, AncestorType={Type CollectionView}}"
+                                                    NotificationType="Notification"
+                                                    Title="{Static l10n:Strings.DeleteRecipe}"
+                                                    Description="{Static l10n:Strings.DeleteRecipeDescription}"
+                                                    PromptType="YesNo"
+                                                    Command="{Binding DeleteCommand, Source={RelativeSource AncestorType={Type vm:RecipesViewModel}}}"
+                                                    CommandParameter="{Binding BindingContext, Source={Reference delete}}"
+                                                    />
+                                            </beh:PopupBehavior.PopupInstance>-->
+                                        </beh:PopupBehavior>
+                                    </cc:IconButton.Behaviors>
+                                </cc:IconButton>
+                            </Grid>
+                        </Grid>
+                    </Border>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </Grid>
+</ContentPage>

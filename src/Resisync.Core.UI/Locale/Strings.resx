@@ -1,0 +1,391 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="AddRecipe" xml:space="preserve">
+    <value>Add Recipe</value>
+    <comment>Button - Adding the recipe after filling out the recipe form.</comment>
+  </data>
+  <data name="Ascending" xml:space="preserve">
+    <value>Ascending</value>
+    <comment>Button - Recipe order by ascending</comment>
+  </data>
+  <data name="BakedGoods" xml:space="preserve">
+    <value>Baked Goods</value>
+    <comment>Category</comment>
+  </data>
+  <data name="Beverages" xml:space="preserve">
+    <value>Beverages</value>
+    <comment>Category</comment>
+  </data>
+  <data name="Breakfast" xml:space="preserve">
+    <value>Breakfast</value>
+    <comment>Category</comment>
+  </data>
+  <data name="Burgers" xml:space="preserve">
+    <value>Burgers</value>
+    <comment>List Item - Selectable Food Category</comment>
+  </data>
+  <data name="Connect" xml:space="preserve">
+    <value>Connect</value>
+    <comment>Title - Cloud Connection</comment>
+  </data>
+  <data name="Connected" xml:space="preserve">
+    <value>Connected</value>
+    <comment>Label - Indicating that the app is connected to the db account.</comment>
+  </data>
+  <data name="Connecting" xml:space="preserve">
+    <value>Connecting...</value>
+    <comment>Label - Indicates that the app is connecting to server.</comment>
+  </data>
+  <data name="Cook" xml:space="preserve">
+    <value>Cook!</value>
+    <comment>Button - Starts to  show  steps for cooking recipe</comment>
+  </data>
+  <data name="CoverImage" xml:space="preserve">
+    <value>Cover Image</value>
+    <comment>Label - Cover Image for the Recipe</comment>
+  </data>
+  <data name="Dairy" xml:space="preserve">
+    <value>Dairy</value>
+    <comment>Category </comment>
+  </data>
+  <data name="Date" xml:space="preserve">
+    <value>Date</value>
+    <comment>Label  - Date at  which the recipe was last changed</comment>
+  </data>
+  <data name="DeleteRecipe" xml:space="preserve">
+    <value>Delete   Recipe  Permanently?</value>
+    <comment>Title</comment>
+  </data>
+  <data name="DeleteRecipeDescription" xml:space="preserve">
+    <value>Are you sure you want to delete this recipe permanently?</value>
+  </data>
+  <data name="Descending" xml:space="preserve">
+    <value>Descending</value>
+    <comment>Button -  Recipe  order by descending</comment>
+  </data>
+  <data name="Description" xml:space="preserve">
+    <value>Description</value>
+    <comment>Label - Description of Recipe</comment>
+  </data>
+  <data name="Desserts" xml:space="preserve">
+    <value>Desserts</value>
+    <comment>Category</comment>
+  </data>
+  <data name="Discard" xml:space="preserve">
+    <value>Discard</value>
+    <comment>Button - Discard changes</comment>
+  </data>
+  <data name="Drinks" xml:space="preserve">
+    <value>Drinks</value>
+    <comment>List Item - Selectable Food Category</comment>
+  </data>
+  <data name="Duration" xml:space="preserve">
+    <value>Duration</value>
+    <comment>Label - Time Duration</comment>
+  </data>
+  <data name="Endpoint" xml:space="preserve">
+    <value>Username</value>
+    <comment>Label - Server endpoint (URI)</comment>
+  </data>
+  <data name="Export" xml:space="preserve">
+    <value>Export</value>
+    <comment>Button - Export recipe</comment>
+  </data>
+  <data name="FailedImportDescription" xml:space="preserve">
+    <value>Failed to import the recipe because the data contained in the clipboard does not exist or is corrupted and cannot be converted.</value>
+    <comment>Label - Error describing that the  recipe could not be imported.</comment>
+  </data>
+  <data name="FailedImportTitle" xml:space="preserve">
+    <value>Failed To Import The Recipe</value>
+    <comment>Title - Failed to import from the text contained or not contained inside  the clipboard.</comment>
+  </data>
+  <data name="FastFood" xml:space="preserve">
+    <value>Fast Food</value>
+    <comment>Category</comment>
+  </data>
+  <data name="Filter" xml:space="preserve">
+    <value>Filter</value>
+    <comment>Title - Search  Filter</comment>
+  </data>
+  <data name="FoodCategory" xml:space="preserve">
+    <value>Food  Category</value>
+    <comment>Label</comment>
+  </data>
+  <data name="Fruits" xml:space="preserve">
+    <value>Fruits</value>
+    <comment>List Item - Selectable Food Category</comment>
+  </data>
+  <data name="Grains" xml:space="preserve">
+    <value>Grains</value>
+    <comment>Category</comment>
+  </data>
+  <data name="Hours" xml:space="preserve">
+    <value>Hours</value>
+    <comment>Label   - Shown  as "20 Hours"</comment>
+  </data>
+  <data name="Import" xml:space="preserve">
+    <value>Import</value>
+    <comment>Button - Import recipe</comment>
+  </data>
+  <data name="Ingredient" xml:space="preserve">
+    <value>Ingredient</value>
+    <comment>Label - Single word description</comment>
+  </data>
+  <data name="Ingredients" xml:space="preserve">
+    <value>Ingredients</value>
+    <comment>Label - Ingredients used in the recipe</comment>
+  </data>
+  <data name="Key" xml:space="preserve">
+    <value>Password</value>
+    <comment>Label - Key/Password for Endpoint</comment>
+  </data>
+  <data name="Keywords" xml:space="preserve">
+    <value>Tags</value>
+    <comment>Label - Keywords used for the recipe</comment>
+  </data>
+  <data name="Login" xml:space="preserve">
+    <value>Login</value>
+    <comment>Button - Login action</comment>
+  </data>
+  <data name="Minutes" xml:space="preserve">
+    <value>Minutes</value>
+    <comment>Label - Shown as "20 Minutes"</comment>
+  </data>
+  <data name="Name" xml:space="preserve">
+    <value>Name</value>
+    <comment>Label</comment>
+  </data>
+  <data name="NewIngredient" xml:space="preserve">
+    <value>New Ingredient</value>
+    <comment>Button - Add new ingredient to recipe.</comment>
+  </data>
+  <data name="NewStep" xml:space="preserve">
+    <value>New Step...</value>
+    <comment>Button - Adding new recipe step into a Table</comment>
+  </data>
+  <data name="Next" xml:space="preserve">
+    <value>Next</value>
+    <comment>Button - Goto next recipe step</comment>
+  </data>
+  <data name="No" xml:space="preserve">
+    <value>No</value>
+    <comment>Button  -  Yes/No Prompt</comment>
+  </data>
+  <data name="OK" xml:space="preserve">
+    <value>OK</value>
+    <comment>Button - OK Prompt</comment>
+  </data>
+  <data name="Open" xml:space="preserve">
+    <value>Open...</value>
+    <comment>Button - Action to open the file dialog.</comment>
+  </data>
+  <data name="Pasta" xml:space="preserve">
+    <value>Pasta</value>
+    <comment>Category</comment>
+  </data>
+  <data name="People" xml:space="preserve">
+    <value>People</value>
+    <comment>Label - Showing the number of people for which the recipe is made.</comment>
+  </data>
+  <data name="Piazza" xml:space="preserve">
+    <value>Piazza</value>
+    <comment>List Item - Selectable Food Category</comment>
+  </data>
+  <data name="Pizza" xml:space="preserve">
+    <value>Pizza</value>
+    <comment>Category</comment>
+  </data>
+  <data name="Preview" xml:space="preserve">
+    <value>Preview</value>
+    <comment>Button - Show preview of recipe.</comment>
+  </data>
+  <data name="Previous" xml:space="preserve">
+    <value>Previous</value>
+    <comment>Button - Goto previous recipe step</comment>
+  </data>
+  <data name="Protein" xml:space="preserve">
+    <value>Protein</value>
+    <comment>Category</comment>
+  </data>
+  <data name="Recipe" xml:space="preserve">
+    <value>Recipe</value>
+    <comment>Label</comment>
+  </data>
+  <data name="Refresh" xml:space="preserve">
+    <value>Refresh</value>
+    <comment>Button </comment>
+  </data>
+  <data name="Salads" xml:space="preserve">
+    <value>Salads</value>
+    <comment>Category</comment>
+  </data>
+  <data name="Sandwiches" xml:space="preserve">
+    <value>Sandwiches</value>
+    <comment>Category</comment>
+  </data>
+  <data name="Seafood" xml:space="preserve">
+    <value>Seafood</value>
+    <comment>Category</comment>
+  </data>
+  <data name="SearchRecipes" xml:space="preserve">
+    <value>Search recipes...</value>
+    <comment>Searchbar -  Placeholder for recipe search</comment>
+  </data>
+  <data name="ShortDescription" xml:space="preserve">
+    <value>Brief</value>
+    <comment>Label - Short Description of the Recipe</comment>
+  </data>
+  <data name="Snacks" xml:space="preserve">
+    <value>Snacks</value>
+    <comment>Category</comment>
+  </data>
+  <data name="SortBy" xml:space="preserve">
+    <value>Sort By</value>
+    <comment>Title  - Sort recipes  by </comment>
+  </data>
+  <data name="Soups" xml:space="preserve">
+    <value>Soups</value>
+    <comment>Category</comment>
+  </data>
+  <data name="Step" xml:space="preserve">
+    <value>Step</value>
+    <comment>Label - Single word description step</comment>
+  </data>
+  <data name="Steps" xml:space="preserve">
+    <value>Recipe Steps</value>
+    <comment>Label - Steps label before a list of recipe steps</comment>
+  </data>
+  <data name="Sweets" xml:space="preserve">
+    <value>Sweets</value>
+    <comment>List Item - Selectable Food Category</comment>
+  </data>
+  <data name="TakePicture" xml:space="preserve">
+    <value>Take Picture</value>
+    <comment>Button - Action to take a camera picture.</comment>
+  </data>
+  <data name="Vegetables" xml:space="preserve">
+    <value>Vegetables</value>
+    <comment>Category</comment>
+  </data>
+  <data name="Yes" xml:space="preserve">
+    <value>Yes</value>
+    <comment>Button - Yes/No Prompt</comment>
+  </data>
+</root>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Resisync.Core.UI.Controls.NumericEntry"
+             xmlns:l10n="clr-namespace:Resisync.Core.UI.Locale"
+             xmlns:cc="clr-namespace:Resisync.Core.UI.Controls"
+             x:DataType="cc:NumericEntry"
+             x:Name="root"
+             >
+    <Grid ColumnDefinitions="*,Auto"  HeightRequest="50">
+        <Entry Grid.Column="0" Text="{Binding Source={Reference root}, Path=Value}" Keyboard="Numeric"/>
+        <Grid Grid.Column="1" RowDefinitions="*,*">
+            <Button Grid.Row="0"
+                    Text="{Static l10n:Icons.ArrowDropUp}"   
+                    Command="{Binding Source={Reference root}, Path=AddCommand}"
+                    CornerRadius="0"
+                    FontFamily="{StaticResource FontIcons}"
+                    Padding="0"
+                    VerticalOptions="Center"
+                    />
+            <Button Grid.Row="1" 
+                    Text="{Static l10n:Icons.ArrowDropDown}" 
+                    Command="{Binding Source={Reference root}, Path=SubCommand}"
+                    CornerRadius="0"
+                    FontFamily="{StaticResource FontIcons}"
+                    Padding="0"
+                    VerticalOptions="Center"
+                    />
+        </Grid>
+    </Grid>
+</ContentView>

@@ -1,0 +1,60 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<tk:Popup xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+       xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+       xmlns:tk="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+       x:Class="Recisync.App.Pages.CloudPopup"
+       xmlns:p="clr-namespace:Recisync.App.Pages"
+       x:DataType="p:CloudPopup"
+       CanBeDismissedByTappingOutsideOfPopup="False"
+       xmlns:l10n="clr-namespace:Resisync.Core.UI.Locale;assembly=Resisync.Core.UI"
+       xmlns:cc="clr-namespace:Resisync.Core.UI.Controls;assembly=Resisync.Core.UI"
+       Color="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource OffBlack}}"
+       Size="400,275"
+       xmlns:beh="clr-namespace:Resisync.Core.UI.Behaviors;assembly=Resisync.Core.UI"
+       >
+    <Border>
+        <Grid RowDefinitions="*,Auto">
+            <VerticalStackLayout Grid.Row="0">
+                <Grid ColumnDefinitions="Auto,Auto,*">
+                    <Label Grid.Column="0" 
+                           Text="{Static l10n:Icons.Cloud}" 
+                           FontFamily="{StaticResource FontIcons}" FontSize="{StaticResource FontTitle}" 
+                           VerticalTextAlignment="Center"
+                           Margin="5"
+                           />
+                    <Label Grid.Column="1" Text="{Static l10n:Strings.Connect}" Margin="5,0,0,0" VerticalTextAlignment="Center" 
+                           FontSize="{StaticResource FontSubtitle}"
+                           />
+                    <cc:IconButton Grid.Column="2" IconText="{Static l10n:Icons.Close}" 
+                                   HorizontalOptions="End"
+                                   Pressed="OnClose"
+                                   />
+                </Grid>
+                <BoxView HeightRequest="1"/>
+                <Label Margin="10,5" Text="{Static l10n:Strings.Endpoint}" FontAttributes="Bold"/>
+                <Entry Margin="20,5" Text="{Binding Endpoint}" Placeholder="..." />
+                <Label Margin="10,5" Text="{Static l10n:Strings.Key}" FontAttributes="Bold"/>
+                <Grid RowDefinitions="Auto,Auto" ColumnDefinitions="*,Auto" Margin="20,5">
+                    <Entry Grid.Row="0" Grid.Column="0" IsPassword="{Binding HideKey}" Text="{Binding AuthenticationKey}"/>
+                    <cc:IconButton Grid.Row="0" Grid.Column="1"
+                        IconText="{Static l10n:Icons.Visibility}" 
+                        Command="{Binding ToggleKeyVisibility}"
+                        />
+                    <cc:IconButton Grid.Row="1" Grid.Column="0" IsEnabled="False" 
+                        IconText="{Static l10n:Icons.Check}" 
+                        Text="{Static l10n:Strings.Connected}" 
+                        IsVisible="{Binding IsConnected}" 
+                        HorizontalOptions="Start"
+                        />
+                    <ActivityIndicator Grid.Row="1" Grid.Column="0" IsRunning="{Binding IsConnecting}" HorizontalOptions="Start"/>
+                </Grid>
+            </VerticalStackLayout>
+
+            <cc:IconButton Grid.Row="1" IconText="{Static l10n:Icons.Login}" 
+               Text="{Static l10n:Strings.Login}" 
+               Command="{Binding LoginCommand}" 
+               VerticalOptions="End"
+               />
+        </Grid>
+    </Border>
+</tk:Popup>

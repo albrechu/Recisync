@@ -1,0 +1,35 @@
+﻿<?xml version = "1.0" encoding = "UTF-8" ?>
+<Application xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:Recisync.App"
+             x:Class="Recisync.App.App"
+             xmlns:res="clr-namespace:Resisync.Core.UI;assembly=Resisync.Core.UI"
+             >
+    <Application.Resources>
+        <!--
+        @Note that normally you can do:
+        <ResourceDictionary Source="Resources/Styles/Colors.xaml;assembly=Resisync.Core.UI"/>
+        <ResourceDictionary Source="Resources/Styles/Fonts.xaml;assembly=Resisync.Core.UI"/>
+        <ResourceDictionary Source="Resources/Styles/Styles.xaml;assembly=Resisync.Core.UI"/>
+        
+        or this:
+        
+        <res:Colors/>
+        <res:Fonts/>
+        <res:Styles/>
+        
+        But for some reason there is a known @Bug where .Net Maui has a problem with ResourceDictionaries
+        from other assemblies. The workaround I found through experimentation is to add them manually in 
+        the code-behind before the Application is initialized. Big @Warning that this file has to be empty 
+        and not even contain a single empty ResourceDictionary or it will crash otherwise. This for 
+        example will cause an exception:
+        
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+        
+        => Meaning you will find the Resources in App.xaml.cs.
+        -->
+    </Application.Resources>
+</Application>

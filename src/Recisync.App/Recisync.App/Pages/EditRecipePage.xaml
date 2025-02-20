@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Recisync.App.Pages.EditRecipePage"
+             xmlns:vm="clr-namespace:Recisync.App.ViewModels"
+             xmlns:mct="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             x:DataType="vm:EditRecipeViewModel"
+             xmlns:l10n="clr-namespace:Resisync.Core.UI.Locale;assembly=Resisync.Core.UI"
+             Title=""
+             xmlns:cc="clr-namespace:Resisync.Core.UI.Controls;assembly=Resisync.Core.UI"
+             xmlns:beh="clr-namespace:Resisync.Core.UI.Behaviors;assembly=Resisync.Core.UI"
+             xmlns:data="clr-namespace:Resisync.Core.Data;assembly=Resisync.Core"
+             xmlns:acvt="clr-namespace:Recisync.App.Converters"
+             xmlns:p="clr-namespace:Recisync.App.Pages"
+             x:Name="root"
+             >
+    <Grid RowDefinitions="*,Auto">
+        <ScrollView Grid.Row="0" Padding="5, 0, 5, 0">
+            <VerticalStackLayout Margin="20,20,40,20">
+                <!--Recipe Name and Import/Export-->
+                <Grid ColumnDefinitions="Auto,*">
+                    <Label Grid.Column="0" Text="{Static l10n:Strings.Recipe}" FontSize="Medium" VerticalOptions="Center"/>
+                    <HorizontalStackLayout Grid.Column="1" HorizontalOptions="End">
+                        <cc:IconButton IconText="{Static l10n:Icons.Publish}" 
+                            Text="{Static l10n:Strings.Import}" 
+                            Command="{Binding ImportCommand}"
+                            Margin="0,0,10,0"
+                            >
+                            <cc:IconButton.Behaviors>
+                                <beh:PopupBehavior ActivationCommand="{Binding ImportErrorCommand, Mode=OneWayToSource}" 
+                                                   PopupInstanceFetcher="{Binding FailedImportFetcher, Source={Reference root}}">
+                                    <!--<beh:PopupBehavior.PopupInstance>
+                                        <p:NotificationPopup 
+                                            NotificationType="Error"
+                                            PromptType="OK"
+                                            Title="{Static l10n:Strings.FailedImportTitle}"
+                                            Description="{Static l10n:Strings.FailedImportDescription}"
+                                            />
+                                    </beh:PopupBehavior.PopupInstance>-->
+                                </beh:PopupBehavior>
+                            </cc:IconButton.Behaviors>
+                        </cc:IconButton>
+                        <cc:IconButton IconText="{Static l10n:Icons.ContentCopy}" 
+                                       Text="{Static l10n:Strings.Export}" 
+                                       Command="{Binding ExportCommand}"
+                                       />
+                    </HorizontalStackLayout>
+                </Grid>
+                <Entry Text="{Binding Name}" Margin="0,15,0,0" />
+                <!--Number of people for the dish-->
+                <Label Text="{Static l10n:Strings.People}" Margin="0,30,0,0" FontSize="{StaticResource FontSubtitle}"/>
+                <Grid ColumnDefinitions="*,Auto" Margin="0,15,0,0">
+                    <Border Grid.Column="0" StrokeThickness="0.1" Padding="15,0,0,0">
+                        <Label Text="{Binding People}" VerticalOptions="Center"/>
+                    </Border>
+                    <Stepper Grid.Column="1" Value="{Binding People}" Minimum="1"/>
+                </Grid>
+                <!--Time required-->
+                <HorizontalStackLayout Margin="0,30,0,0">
+                    <Label Text="{Static l10n:Icons.Schedule}" FontFamily="{StaticResource FontIcons}" 
+                           FontSize="{StaticResource FontSubtitle}" 
+                           VerticalOptions="Center" Margin="0,0,20,0"/>
+
+                    <Picker Title="{Static l10n:Strings.Hours}" ItemsSource="{Binding Hours}" SelectedItem="{Binding DurationHours}" Margin="0,0,20,0"/>
+                    <Picker Title="{Static l10n:Strings.Minutes}" ItemsSource="{Binding Minutes}" SelectedItem="{Binding DurationMinutes}"/>
+                </HorizontalStackLayout>
+                
+                <!--Keywords for searching-->
+                <Label Text="{Static l10n:Strings.ShortDescription}" Margin="0,30,0,0" FontSize="{StaticResource FontSubtitle}"/>
+                <Entry Text="{Binding ShortDescription}" Margin="0,15,0,0"/>
+                <!--Keywords for searching-->
+                <Label Text="{Static l10n:Strings.Keywords}" Margin="0,30,0,0" FontSize="{StaticResource FontSubtitle}"/>
+                <Entry Text="{Binding Keywords}" Margin="0,15,0,0"/>
+                <!--Food Category-->
+                <Label Text="{Static l10n:Strings.FoodCategory}" Margin="0,30,0,0" FontSize="{StaticResource FontSubtitle}"/>
+                <Picker ItemsSource="{Binding FoodCategories}" 
+                        SelectedItem="{Binding FoodCategory}" 
+                        Margin="0,15,0,0"
+                        ItemDisplayBinding="{Binding ., Converter={acvt:FoodCategoryToStringConverter}}"
+                        />
+                <!--Cover Image-->
+                <Label Text="{Static l10n:Strings.CoverImage}" Margin="0,30,0,0" FontSize="{StaticResource FontSubtitle}"/>
+                <Border Margin="0,15,0,0"  BackgroundColor="{AppThemeBinding Dark={StaticResource PitchBlack}, Light={StaticResource Secondary}}">
+                    <Image Source="{Binding Path=CoverImage, Converter={mct:ByteArrayToImageSourceConverter}}"
+                        HorizontalOptions="Fill"
+                        HeightRequest="400"
+                        Aspect="AspectFill"
+                        />
+                </Border>
+                <Grid Grid.Column="1" Margin="0,15,0,0" VerticalOptions="Center" ColumnDefinitions="*,*">
+                    <cc:IconButton Grid.Column="0" Margin="0,0,10,0"
+                        IconText="{Static l10n:Icons.PhotoCamera}" Text="{Static l10n:Strings.TakePicture}"
+                        Command="{Binding CapturePhotoCommand}"
+                        HorizontalOptions="End"
+                        />
+                    <cc:IconButton Grid.Column="1" Margin="10,0,0,0"
+                        IconText="{Static l10n:Icons.Image}" Text="{Static l10n:Strings.Open}" 
+                        Command="{Binding OpenImageCommand}"
+                        HorizontalOptions="Start"
+                        />
+                </Grid>
+                <!--Description-->
+                <Label Text="{Static l10n:Strings.Description}" Margin="0,30,0,0" FontSize="{StaticResource FontSubtitle}"/>
+                <Editor Text="{Binding Description}" HeightRequest="150" Margin="0,15,0,0"/>
+                <!--#############################################################################################################-->
+                
+                <!--Ingredients List-->
+                <Label Text="{Static l10n:Strings.Ingredients}"  Margin="0,100,0,0" FontSize="{StaticResource FontTitle}"/>
+                <Border Margin="0,15,0,0" StrokeThickness="1.0">
+                    <CollectionView ItemsSource="{Binding Ingredients}" 
+                                    HeightRequest="400"
+                                    CanReorderItems="True"
+                                    >
+                        <CollectionView.Header>
+                            <mct:UniformItemsLayout Padding="-20,0,-20,0">
+                                <Label Text="Label" HorizontalOptions="Center"/>
+                                <Label Text="Amount" HorizontalOptions="Center"/>
+                                <Label Text="Note" HorizontalOptions="Center"/>
+                            </mct:UniformItemsLayout>
+                        </CollectionView.Header>
+                        <CollectionView.ItemsLayout>
+                            <LinearItemsLayout Orientation="Vertical" />
+                        </CollectionView.ItemsLayout>
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate x:DataType="data:Ingredient">
+                                <Border StrokeThickness="1">
+                                    <Grid ColumnDefinitions="Auto,Auto,*,Auto,*,Auto,*,Auto">
+                                        <Label Grid.Column="0" Text="{Static l10n:Icons.Reorder}" 
+                                               FontSize="{StaticResource FontTitle}" FontFamily="{StaticResource FontIcons}"
+                                               VerticalOptions="Center" Margin="10,0,10,0"
+                                               HorizontalOptions="Center"
+                                            />
+                                        
+                                        <BoxView Grid.Column="1" WidthRequest="1"/>
+                                        <Entry   Grid.Column="2" Text="{Binding Name}" Placeholder="Ingredient" HorizontalOptions="Fill"/>
+                                            
+                                        <BoxView Grid.Column="3" WidthRequest="1"/>
+                                        <Entry   Grid.Column="4" Text="{Binding Amount}" Placeholder="Amount" HorizontalOptions="Fill"/>
+                                        
+                                        <BoxView Grid.Column="5" WidthRequest="1"/>
+                                        <Entry   Grid.Column="6" Text="{Binding Note}" Placeholder="Additional Note..." HorizontalOptions="Fill"/>
+
+                                        <cc:IconButton Grid.Column="7"
+                                            BackgroundColor="#B75555"
+                                            VerticalOptions="Center"
+                                            HorizontalOptions="Center"
+                                            Text="{Static l10n:Icons.Close}" 
+                                            FontFamily="{StaticResource FontIcons}"
+                                            Command="{Binding Source={RelativeSource Mode=FindAncestor, AncestorType={Type CollectionView}}, Path=BindingContext.RemoveIngredientCommand}"
+                                            CommandParameter="{Binding Source={RelativeSource Mode=Self}, Path=BindingContext}"
+                                            />
+
+                                    </Grid>
+                                </Border>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+                </Border>
+                <cc:IconButton IconText="{Static l10n:Icons.Add}" 
+                        Text="{Static l10n:Strings.NewIngredient}" 
+                        Command="{Binding AddNewIngredientCommand}"
+                        HorizontalOptions="End" Margin="0,15,0,0"
+                        />
+
+                <!--#############################################################################################################-->
+                <!--Step List-->
+                <Grid ColumnDefinitions="*,*" Margin="0,100,0,0">
+                    <Label Grid.Column="0" Text="{Static l10n:Strings.Steps}" HorizontalOptions="Start" VerticalOptions="Center" FontSize="{StaticResource FontTitle}"/>
+                    <cc:IconButton Grid.Column="1" Margin="0,15,0,0" 
+                            HorizontalOptions="End"
+                            IconText="{Static l10n:Icons.Add}" 
+                            Text="{Static l10n:Strings.NewStep}" 
+                            Command="{Binding AddNewStepCommand}"
+                            />
+                </Grid>
+                <CollectionView ItemsSource="{Binding Steps}" 
+                                Margin="0,15,0,0" 
+                                CanReorderItems="True"
+                                >
+                    <CollectionView.Behaviors>
+                        <mct:EventToCommandBehavior EventName="ReorderCompleted" Command="{Binding StepsReorderedCommand}"/>
+                    </CollectionView.Behaviors>
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate x:DataType="data:RecipeStep" x:Name="step">
+                            <VerticalStackLayout>
+                                <BoxView HeightRequest="0.5"/>
+                                <HorizontalStackLayout>
+                                    <Label Text="{Static l10n:Icons.Reorder}" FontSize="{StaticResource FontTitle}" 
+                                           FontFamily="{StaticResource FontIcons}" VerticalTextAlignment="Center" Margin="0,0,10,0"/>
+                                    <Label Text="{Binding Step}" FontSize="{StaticResource FontTitle}" 
+                                           VerticalTextAlignment="Center"/>
+                                    
+                                </HorizontalStackLayout>
+                                <!--Name-->
+                                <Label Margin="0,10,0,5" Text="{Static l10n:Strings.Name}" 
+                                       VerticalOptions="Start" FontSize="{StaticResource FontSubtitle}"
+                                       />
+                                <Grid ColumnDefinitions="*,Auto">
+                                    <Entry Grid.Column="0" Text="{Binding Name}"/>
+                                    <cc:IconButton Grid.Column="1" IconText="{Static l10n:Icons.Delete}" 
+                                        Background="#B75555"
+                                        Margin="10,0,0,0"
+                                        Command="{Binding Path=BindingContext.RemoveStepCommand, Source={RelativeSource Mode=FindAncestor, AncestorType={Type CollectionView}}}"
+                                        CommandParameter="{Binding Path=BindingContext, Source={RelativeSource Mode=Self}}"
+                                        />
+                                </Grid>
+                                <!--Description-->
+                                <Label Margin="0,20,15,0" Text="{Static l10n:Strings.Description}" VerticalOptions="Start"
+                                       FontSize="{StaticResource FontSubtitle}"
+                                       />
+                                <Editor Margin="0,10,0,20" Text="{Binding Description}" HeightRequest="150"/>
+                                <!--Image-->
+                                <mct:AvatarView HorizontalOptions="Center" Margin="0,10,0,0"
+                                    ImageSource="{Binding Image, Converter={mct:ByteArrayToImageSourceConverter}}"
+                                    HeightRequest="250" WidthRequest="250"
+                                    BackgroundColor="{AppThemeBinding Dark={StaticResource PitchBlack}, Light={StaticResource Secondary}}"
+                                    />
+                                <HorizontalStackLayout Margin="0,10,0,15" HorizontalOptions="Center">
+                                    <cc:IconButton 
+                                        IconText="{Static l10n:Icons.PhotoCamera}" Text="{Static l10n:Strings.TakePicture}"
+                                        Command="{Binding Source={RelativeSource Mode=FindAncestor, AncestorType={Type CollectionView}}, Path=BindingContext.CapturePhotoCommand}"
+                                        CommandParameter="{Binding Source={RelativeSource Mode=Self}, Path=BindingContext}"
+                                        Margin="0,0,15,0"
+                                        />
+                                    <cc:IconButton 
+                                        IconText="{Static l10n:Icons.Image}" Text="{Static l10n:Strings.Open}" 
+                                        Command="{Binding Source={RelativeSource Mode=FindAncestor, AncestorType={Type CollectionView}}, Path=BindingContext.OpenImageCommand}"
+                                        CommandParameter="{Binding Source={RelativeSource Mode=Self}, Path=BindingContext}"
+                                        />
+                                </HorizontalStackLayout>
+                                <BoxView HeightRequest="0.5"/>
+                            </VerticalStackLayout>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </VerticalStackLayout>
+        </ScrollView>
+        <Grid Grid.Row="1" ColumnDefinitions="*,*,Auto">
+            <cc:IconButton Grid.Column="0" IconText="{Static l10n:Icons.Preview}" Text="{Static l10n:Strings.Preview}">
+                <cc:IconButton.Behaviors>
+                    <beh:NavigationBehavior 
+                        EventName="Pressed"
+                        PageType="{Type p:RecipeDetailPage}"
+                        CustomPageTypeParameter="{Binding Recipe}"
+                        />
+                </cc:IconButton.Behaviors>
+            </cc:IconButton>
+            <cc:IconButton Grid.Column="1" 
+                           IconText="{Static l10n:Icons.Check}" 
+                           Text="{Static l10n:Strings.AddRecipe}"
+                           Command="{Binding Path=SubmitRecipeCommand}"
+                           />
+            <cc:IconButton Grid.Column="2" IconText="{Static l10n:Icons.Delete}" 
+                    Style="{StaticResource DangerIconButton}"
+                    beh:NavigationBehavior.PopEventName="Pressed"
+                    />
+        </Grid>
+    </Grid>
+</ContentPage>
